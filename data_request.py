@@ -8,14 +8,5 @@ raw_json_data = data.content
 
 json_str = str(raw_json_data)
 
-
-class JSONConverter:
-
-    def __init__(self, raw_data):
-        self.raw_data = raw_data
-
-    def convert_to_dict(self):
-        pass
-
 with open('data.txt', 'w') as f:
       f.write(json_str)
