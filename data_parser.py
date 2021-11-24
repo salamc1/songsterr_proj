@@ -1,5 +1,6 @@
 import json
 from collections import Counter
+from spt.matplot_spt import make_histogram_from_dict
 
 with open('data.json') as f:
     data = json.load(f)
@@ -9,6 +10,7 @@ voices = [item['voices'][0] for item in measures]
 beats = [item['beats'] for item in voices]
 notes = [item['notes'] for list in beats for item in list]  #list of list of dictionaries
 
+string0 = []
 string1 = []
 string2 = []
 string3 = []
@@ -28,13 +30,14 @@ for note_list in notes:
                 string2.append(note_item['fret'])
             elif note_item['string'] == 1:
                 string1.append(note_item['fret'])
+            elif note_item['string'] == 0:
+                string0.append(note_item['fret'])
         except KeyError:
             pass
 
-print(
-    f'String 1: {Counter(string1)}  \n\
-String 2: {Counter(string2)}  \n\
-String 3: {Counter(string3)}  \n\
-String 4: {Counter(string4)}  \n\
-String 5: {Counter(string5)}  \n\
-    ')
+make_histogram_from_dict(Counter(string0), 'plots/string0_hist.png', 'High E String Note Frequency', 'Fret', 'Frequency')
+make_histogram_from_dict(Counter(string1), 'plots/string1_hist.png', 'B String Note Frequency', 'Fret', 'Frequency')
+make_histogram_from_dict(Counter(string2), 'plots/string2_hist.png', 'G String Note Frequency', 'Fret', 'Frequency')
+make_histogram_from_dict(Counter(string3), 'plots/string3_hist.png', 'D String Note Frequency', 'Fret', 'Frequency')
+make_histogram_from_dict(Counter(string4), 'plots/string4_hist.png', 'A String Note Frequency', 'Fret', 'Frequency')
+make_histogram_from_dict(Counter(string5), 'plots/string5_hist.png', 'Low E String Note Frequency', 'Fret', 'Frequency')
